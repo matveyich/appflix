@@ -38,4 +38,8 @@ public class developer {
 		}
 		return info; 
 	}
+	
+	public List<application> getApps(){
+		return this.apps;
+	}
 }
