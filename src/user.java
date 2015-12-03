@@ -30,7 +30,9 @@ public class user {
 	public void distributFeeByApps(){
 		// TODO не учитывает частоту использования приложения
 		for (application app: this.apps){
-			app.increaseRevenue(this.monthlyFee/this.apps.size());
+			if (app.getLaunches() >= 1.0){
+				app.increaseRevenue(this.monthlyFee/this.apps.size());	
+			}
 		}
 	}
 }

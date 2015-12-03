@@ -20,7 +20,7 @@ public class developer {
 		application app;
 		
 		while (i < this.numberOfApps){
-			numberOfLaunches = (float) (randomno.nextInt(120)*0.033);
+			numberOfLaunches = (float) 1.0;
 			cost = randomno.nextInt(1000)/30;
 			appName = this.name + "app" + i.toString();
 			app = new application(appName, numberOfLaunches, cost);

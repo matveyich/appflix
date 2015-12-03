@@ -19,6 +19,10 @@ public class appflix {
 		generateDevelopers(numberOfDevelopers);
 		generateUsers(numberOfUsers);
 		
+		System.out.println("----- Store settings -----\n");
+
+		
+		
 		System.out.println("------Users------\n");
 		
 		for (user u: users){
@@ -48,6 +52,7 @@ public class appflix {
 			i++;
 		}
 		
+		// User can't have more apps than the store has, so we limit maxAppsPerUser param
 		int storeSize = storeApps.size();
 		if (storeSize < maxAppsPerUser) {
 			maxAppsPerUser = storeSize;
@@ -60,14 +65,25 @@ public class appflix {
 		user u;
 		Random randomno = new Random();
 		int numberOfApps = 0;
+		Integer appIndex = 0;
+		List<Integer> userAppIndexes = new ArrayList<Integer>();
 		
 		while (i < numberOfUsers){
 			u = new user("user" + i, userMonthlyFee);
 			numberOfApps = randomno.nextInt(maxAppsPerUser);
 			k = 0;
+			appIndex = 0;
+			userAppIndexes.clear(); // store app indexes that user already have, so that user doesn't have the same multiple times
 			
 			while (k < numberOfApps){
-				u.addApp(storeApps.get(randomno.nextInt(storeApps.size())));
+				appIndex = randomno.nextInt(storeApps.size());
+				
+				do {
+					u.addApp(storeApps.get(appIndex));	
+				} while (userAppIndexes.contains(appIndex) == true);
+				
+				
+				userAppIndexes.add(appIndex);
 				k++;
 			}
 			
