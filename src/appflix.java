@@ -13,11 +13,26 @@ public class appflix {
 	private static float minAppPrice = (float) 0.0;
 
 	private static float userMonthlyFee = (float) 20.0;
-	private static float platformFee = (float) 0.1;
+	private static float platformFeePart = (float) 0.1;
 	
 	public static void main(String[] args) {
 		generateDevelopers(numberOfDevelopers);
 		generateUsers(numberOfUsers);
+		
+		System.out.println("------Users------\n");
+		
+		for (user u: users){
+			System.out.println(u.getInfo());
+			System.out.println("-------\n");
+		}
+		
+		System.out.println("------Applications------\n");
+		
+		for (application app: storeApps){
+			System.out.println(app.getInfo());
+			System.out.println("revenue: " + app.getMonthlyRevenue(platformFeePart));
+			System.out.println("-------\n");
+		}
 		System.out.println("finished");
 	}
 	
@@ -47,7 +62,7 @@ public class appflix {
 		int numberOfApps = 0;
 		
 		while (i < numberOfUsers){
-			u = new user("user" + i);
+			u = new user("user" + i, userMonthlyFee);
 			numberOfApps = randomno.nextInt(maxAppsPerUser);
 			k = 0;
 			
@@ -57,6 +72,7 @@ public class appflix {
 			}
 			
 			users.add(u);
+			u.distributFeeByApps();
 			i++;
 		}
 	}

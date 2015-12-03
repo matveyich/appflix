@@ -15,6 +15,14 @@ public class application {
 		return "name: " + this.name + "; cost: " + this.cost + " ; launches per day: " + this.launchesPerDay + "\n"; 
 	}
 	
+	public String getName(){
+		return this.name;
+	}
+	
+	public float getMonthlyRevenue(float platformFeePart){
+		return this.revenue*(1-platformFeePart);
+	}
+	
 	public void increaseRevenue(float amount){
 		this.revenue += amount;
 	}
