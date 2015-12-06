@@ -30,4 +30,8 @@ public class application {
 	public void increaseRevenue(float amount){
 		this.revenue += amount;
 	}
+	
+	public float getRevenue(){
+		return this.revenue;
+	}
 }
