@@ -5,15 +5,16 @@ public class appflix {
 	private static List<user> users = new ArrayList<user>();
 	private static List<application> storeApps = new ArrayList<application>();
 	private static int numberOfDevelopers = 30;
-	private static int numberOfUsers = 1000000;
+	private static int numberOfUsers = 100000;
 	
 	private static int maxAppsPerUser = 20;
-	private static int maxAppsPerDeveloper = 1;
+	private static int maxAppsPerDeveloper = 3;
 	private static float maxAppPrice = (float) 1000.0;
 	private static float minAppPrice = (float) 0.0;
 
 	private static float userMonthlyFee = (float) 20.0;
 	private static float platformFeePart = (float) 0.1;
+	private static float sumDevRevenue = (float) 0.0;
 	
 	public static void main(String[] args) {
 		generateDevelopers(numberOfDevelopers);
@@ -43,8 +44,11 @@ public class appflix {
 		for (developer d: devs){
 			System.out.println(d.getInfo() + "\n");
 			System.out.println("revenue: " + d.getRevenue(platformFeePart));
+			sumDevRevenue += d.getRevenue(platformFeePart);
 			System.out.println("-------\n");
 		}
+		
+		System.out.println("Total Dev revenue: " + sumDevRevenue + "\n");
 		
 		System.out.println("finished");
 	}
