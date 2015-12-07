@@ -5,10 +5,10 @@ public class appflix {
 	private static List<user> users = new ArrayList<user>();
 	private static List<application> storeApps = new ArrayList<application>();
 	private static int numberOfDevelopers = 30;
-	private static int numberOfUsers = 100000;
+	private static int numberOfUsers = 1000000;
 	
 	private static int maxAppsPerUser = 20;
-	private static int maxAppsPerDeveloper = 3;
+	private static int maxAppsPerDeveloper = 5;
 	private static float maxAppPrice = (float) 1000.0;
 	private static float minAppPrice = (float) 0.0;
 
@@ -61,15 +61,24 @@ public class appflix {
 		
 		while (i < numberOfDevelopers){
 			devAppsNumber = 0;
+
+			// generating number of apps for each developer
+			// we can adjust this logic to make one developer more popular than others
 			while (devAppsNumber == 0){
 				if (maxAppsPerDeveloper == 1 ) {
 					devAppsNumber = maxAppsPerDeveloper;
 				}
 				else {
-					devAppsNumber = randomno.nextInt(maxAppsPerDeveloper);
+					// simulating that last 25% of devs have more apps than others
+					if (i > numberOfDevelopers*0.75){
+						devAppsNumber = randomno.nextInt(maxAppsPerDeveloper);
+					} else {
+						devAppsNumber = randomno.nextInt(maxAppsPerDeveloper-Math.round(maxAppsPerDeveloper/2));	
+					}
 				}
 			}
-			dev = new developer("dev" + i, devAppsNumber);
+			
+			dev = new developer("dev" + i, devAppsNumber, i);
 			devs.add(dev);
 			storeApps.addAll(dev.getApps());
 			i++;
@@ -105,7 +114,7 @@ public class appflix {
 			while (k < numberOfApps){
 				
 				do {
-					appIndex = randomno.nextInt(storeApps.size());	
+					appIndex = randomno.nextInt(storeApps.size());
 				} while (userAppIndexes.contains(appIndex) == true);
 				u.addApp(storeApps.get(appIndex));
 				

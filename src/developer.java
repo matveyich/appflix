@@ -1,15 +1,17 @@
 import java.util.*;
 
 public class developer {
+	private Integer devId;
 	private String name;
 	private Integer numberOfApps;
 	private List<application> apps = new ArrayList<application>();
 	private float revenue = 0;
 	
-	public developer(String name, Integer numberOfApps){
+	public developer(String name, Integer numberOfApps, Integer devId){
 		this.name = name;
 		this.numberOfApps = numberOfApps;
 		this.generateApps();
+		this.devId = devId;
 	}
 	
 	private void generateApps(){
@@ -21,8 +23,8 @@ public class developer {
 		application app;
 		
 		while (i < this.numberOfApps){
-			numberOfLaunches = (float) 1.0;
-			cost = randomno.nextInt(1000)/30;
+			numberOfLaunches = (float) 1.0; // assume that at least once this app will be launched
+			cost = randomno.nextInt(1000)/30; // random app cost
 			appName = this.name + "app" + i.toString();
 			app = new application(appName, numberOfLaunches, cost);
 			this.apps.add(app);
