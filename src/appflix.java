@@ -4,10 +4,10 @@ public class appflix {
 	private static List<developer> devs = new ArrayList<developer>();
 	private static List<user> users = new ArrayList<user>();
 	private static List<application> storeApps = new ArrayList<application>();
-	private static int numberOfDevelopers = 30;
+	private static int numberOfDevelopers = 100;
 	private static int numberOfUsers = 1000000;
 	
-	private static int maxAppsPerUser = 10; // ограничиваем кол-во приложений которое будет использовать каждый пользователь
+	private static int maxAppsPerUser = 20; // ограничиваем кол-во приложений которое будет использовать каждый пользователь
 	private static int maxAppsPerDeveloper = 11; // ограничиваем кол-во приложений на разработчика - чем больше приложений, тем более популярный разработчик при нормальном распределении пользователей между приложениями
 
 	private static float userMonthlyFee = (float) 20.0; // ежемесячная плата пользователя
@@ -19,11 +19,12 @@ public class appflix {
 		generateUsers(numberOfUsers);
 		
 		System.out.println("------Developers------\n");
-		System.out.println("Name, Popularity Index, Revenue");
+		System.out.println("Name, Popularity Index, Revenue, Revenue in M, Number of Users");
 		
 		// Popularity index симулируется как большее кол-во приложений у разработчика при нормальном распределении пользователей по приложениям
 		for (developer d: devs){
-			System.out.println(d.getName() + "," + d.getNumberOfApps() + "," + Math.round(d.getRevenue(platformFeePart)));
+			float devRevenue = d.getRevenue(platformFeePart);
+			System.out.println(d.getName() + "," + d.getNumberOfApps() + "," + Math.round(devRevenue) + "," + devRevenue/1000000 + "," + d.getNumberOfUsers());
 			sumDevRevenue += d.getRevenue(platformFeePart);
 		}
 		
@@ -94,7 +95,10 @@ public class appflix {
 				do {
 					appIndex = randomno.nextInt(storeApps.size());
 				} while (userAppIndexes.contains(appIndex) == true);
-				u.addApp(storeApps.get(appIndex));
+				
+				application _app = storeApps.get(appIndex);
+				u.addApp(_app); //добавляем пользователю приложение
+				_app.increaseNumberOfUsers(); // у приложения становится на +1 юзера больше
 				
 				userAppIndexes.add(appIndex);
 				k++;

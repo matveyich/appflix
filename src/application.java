@@ -2,6 +2,7 @@
 public class application {
 	private String name;
 	private float revenue = (float) 0.0;
+	private Integer numberOfUsers = 0;
 	
 	public application(String name){
 		this.name = name;
@@ -25,5 +26,13 @@ public class application {
 	
 	public float getRevenue(){
 		return this.revenue;
+	}
+	
+	public void increaseNumberOfUsers(){
+		this.numberOfUsers += 1;
+	}
+	
+	public Integer getNumberOfUsers(){
+		return this.numberOfUsers;
 	}
 }

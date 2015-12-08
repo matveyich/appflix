@@ -6,6 +6,7 @@ public class developer {
 	private Integer numberOfApps;
 	private List<application> apps = new ArrayList<application>();
 	private float revenue = 0;
+	private Integer numberOfUsers = 0;
 	
 	public developer(String name, Integer numberOfApps, Integer devId){
 		this.name = name;
@@ -63,5 +64,12 @@ public class developer {
 	public float getRevenue(float platformFeePart){
 		this.revenue = this.countRevenue()*(1-platformFeePart);
 		return this.revenue;
+	}
+	
+	public Integer getNumberOfUsers(){
+		for (application app: this.apps){
+			this.numberOfUsers += app.getNumberOfUsers();
+		}
+		return this.numberOfUsers;
 	}
 }
