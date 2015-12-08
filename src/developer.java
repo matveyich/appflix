@@ -8,6 +8,7 @@ public class developer {
 	private float revenue = 0;
 	private Integer numberOfUsers = 0;
 	
+	
 	public developer(String name, Integer numberOfApps, Integer devId){
 		this.name = name;
 		this.numberOfApps = numberOfApps;
@@ -27,6 +28,8 @@ public class developer {
 			appName = this.name + "app" + i.toString();
 			app = new application(appName);
 			this.apps.add(app);
+			appflix.storeApps.add(app);
+			app.setAppIndex(appflix.storeApps.lastIndexOf(app));
 			i++;
 		}
 	}
@@ -71,5 +74,13 @@ public class developer {
 			this.numberOfUsers += app.getNumberOfUsers();
 		}
 		return this.numberOfUsers;
+	}
+	
+	public Integer getSumPopularityIndex(){ // сумма индексов популярности приложений разработчика (полезно для проверки валидности данных)
+		Integer index = 0;
+		for (application app: this.apps){
+			index += app.getPopularityIndex();
+		}
+		return index;
 	}
 }
