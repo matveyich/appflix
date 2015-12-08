@@ -7,48 +7,27 @@ public class appflix {
 	private static int numberOfDevelopers = 30;
 	private static int numberOfUsers = 1000000;
 	
-	private static int maxAppsPerUser = 20;
-	private static int maxAppsPerDeveloper = 5;
-	private static float maxAppPrice = (float) 1000.0;
-	private static float minAppPrice = (float) 0.0;
+	private static int maxAppsPerUser = 10; // ограничиваем кол-во приложений которое будет использовать каждый пользователь
+	private static int maxAppsPerDeveloper = 11; // ограничиваем кол-во приложений на разработчика - чем больше приложений, тем более популярный разработчик при нормальном распределении пользователей между приложениями
 
-	private static float userMonthlyFee = (float) 20.0;
-	private static float platformFeePart = (float) 0.1;
-	private static float sumDevRevenue = (float) 0.0;
+	private static float userMonthlyFee = (float) 20.0; // ежемесячная плата пользователя
+	private static float platformFeePart = (float) 0.1; // доля от доходов которую берет AppFlix
+	private static float sumDevRevenue = (float) 0.0; // суммарный доход всех разработчиков
 	
 	public static void main(String[] args) {
 		generateDevelopers(numberOfDevelopers);
 		generateUsers(numberOfUsers);
 		
-//		System.out.println("----- Store settings -----\n");
-//
-//		
-//		
-//		System.out.println("------Users------\n");
-//		
-//		for (user u: users){
-//			System.out.println(u.getInfo());
-//			System.out.println("-------\n");
-//		}
-//		
-//		System.out.println("------Applications------\n");
-//		
-//		for (application app: storeApps){
-//			System.out.println(app.getInfo());
-//			System.out.println("revenue: " + app.getMonthlyRevenue(platformFeePart));
-//			System.out.println("-------\n");
-//		}
-		
 		System.out.println("------Developers------\n");
+		System.out.println("Name, Popularity Index, Revenue");
 		
+		// Popularity index симулируется как большее кол-во приложений у разработчика при нормальном распределении пользователей по приложениям
 		for (developer d: devs){
-			System.out.println(d.getInfo() + "\n");
-			System.out.println("revenue: " + d.getRevenue(platformFeePart));
+			System.out.println(d.getName() + "," + d.getNumberOfApps() + "," + Math.round(d.getRevenue(platformFeePart)));
 			sumDevRevenue += d.getRevenue(platformFeePart);
-			System.out.println("-------\n");
 		}
 		
-		System.out.println("Total Dev revenue: " + sumDevRevenue + "\n");
+		System.out.println("\nTotal Dev revenue: " + sumDevRevenue + "\n");
 		
 		System.out.println("finished");
 	}
@@ -62,15 +41,14 @@ public class appflix {
 		while (i < numberOfDevelopers){
 			devAppsNumber = 0;
 
-			// generating number of apps for each developer
-			// we can adjust this logic to make one developer more popular than others
+			// Генерируем приложения каждому разработчику
 			while (devAppsNumber == 0){
 				if (maxAppsPerDeveloper == 1 ) {
 					devAppsNumber = maxAppsPerDeveloper;
 				}
 				else {
-					// simulating that last 25% of devs have more apps than others
-					if (i > numberOfDevelopers*0.75){
+					// симулируем, что у часть разработчиков более популярна (у них будет выше Popularity index)
+					if (i > numberOfDevelopers*0.85){
 						devAppsNumber = randomno.nextInt(maxAppsPerDeveloper);
 					} else {
 						devAppsNumber = randomno.nextInt(maxAppsPerDeveloper-Math.round(maxAppsPerDeveloper/2));	
@@ -84,7 +62,7 @@ public class appflix {
 			i++;
 		}
 		
-		// User can't have more apps than the store has, so we limit maxAppsPerUser param
+		// у пользователя не может быть приложений больше чем в сторе
 		int storeSize = storeApps.size();
 		if (storeSize < maxAppsPerUser) {
 			maxAppsPerUser = storeSize;
@@ -103,14 +81,14 @@ public class appflix {
 		while (i < numberOfUsers){
 			u = new user("user" + i, userMonthlyFee);
 			numberOfApps = 0;
-			while (numberOfApps == 0){ // user should have more than 0 apps
+			while (numberOfApps == 0){ // у юзера должно быть больше 0 приложений
 				numberOfApps = randomno.nextInt(maxAppsPerUser);	
 			}
 			k = 0;
 			appIndex = 0;
-			userAppIndexes.clear(); // store app indexes that user already have, so that user doesn't have the same multiple times
+			userAppIndexes.clear(); // храним id приложений, которые есть у юзера, чтоб он не использовал одно и то же два раза
 			
-			// add apps to user
+			// генерим приложения юзерам
 			while (k < numberOfApps){
 				
 				do {

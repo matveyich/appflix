@@ -16,20 +16,26 @@ public class developer {
 	
 	private void generateApps(){
 		Integer i = 0;
-		float numberOfLaunches;
+		Integer numberOfLaunches = 1;
 		float cost;
 		Random randomno = new Random();
 		String appName;
 		application app;
 		
 		while (i < this.numberOfApps){
-			numberOfLaunches = (float) 1.0; // assume that at least once this app will be launched
-			cost = randomno.nextInt(1000)/30; // random app cost
 			appName = this.name + "app" + i.toString();
-			app = new application(appName, numberOfLaunches, cost);
+			app = new application(appName);
 			this.apps.add(app);
 			i++;
 		}
+	}
+	
+	public Integer getNumberOfApps(){
+		return this.numberOfApps;
+	}
+	
+	public String getName(){
+		return this.name;
 	}
 	
 	public String getInfo(){
